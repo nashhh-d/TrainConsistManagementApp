@@ -1,16 +1,6 @@
-import java.util.*;
-import java.util.stream.*;
-
-// Bogie class
-class Bogie {
-    String name;
-    int capacity;
-
-    Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
-    }
-}
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TrainConsistManagementApp {
 
@@ -18,18 +8,40 @@ public class TrainConsistManagementApp {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // Create list of bogies
-        List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 54));
-        bogies.add(new Bogie("First Class", 24));
+        Scanner sc = new Scanner(System.in);
 
-        // Stream pipeline to calculate total capacity
-        int totalCapacity = bogies.stream()
-                .map(b -> b.capacity)   // extract capacity
-                .reduce(0, Integer::sum); // sum all values
+        // Input from user
+        System.out.print("Enter Train ID (format: TRN-1234): ");
+        String trainId = sc.nextLine();
 
-        // Display result
-        System.out.println("\nTotal Seating Capacity: " + totalCapacity);
+        System.out.print("Enter Cargo Code (format: PET-AB): ");
+        String cargoCode = sc.nextLine();
+
+        // Define regex patterns
+        String trainPattern = "TRN-\\d{4}";
+        String cargoPattern = "PET-[A-Z]{2}";
+
+        // Compile patterns
+        Pattern p1 = Pattern.compile(trainPattern);
+        Pattern p2 = Pattern.compile(cargoPattern);
+
+        // Create matchers
+        Matcher m1 = p1.matcher(trainId);
+        Matcher m2 = p2.matcher(cargoCode);
+
+        // Validate inputs
+        if (m1.matches()) {
+            System.out.println("Valid Train ID");
+        } else {
+            System.out.println("Invalid Train ID");
+        }
+
+        if (m2.matches()) {
+            System.out.println("Valid Cargo Code");
+        } else {
+            System.out.println("Invalid Cargo Code");
+        }
+
+        sc.close();
     }
 }

@@ -1,40 +1,37 @@
+import java.util.Scanner;
+
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // Array of passenger bogie capacities
-        int[] capacities = {72, 54, 24, 90, 60};
+        // Array of bogie IDs
+        String[] bogieIds = {"B101", "B205", "B309", "B410", "B512"};
 
-        System.out.println("\nBefore Sorting:");
-        printArray(capacities);
+        Scanner sc = new Scanner(System.in);
 
-        // Bubble Sort Algorithm
-        int n = capacities.length;
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
+        // Input search key
+        System.out.print("\nEnter Bogie ID to search: ");
+        String searchKey = sc.nextLine();
 
-                // Compare adjacent elements
-                if (capacities[j] > capacities[j + 1]) {
+        boolean found = false;
 
-                    // Swap values
-                    int temp = capacities[j];
-                    capacities[j] = capacities[j + 1];
-                    capacities[j + 1] = temp;
-                }
+        // Linear Search
+        for (String id : bogieIds) {
+            if (id.equals(searchKey)) { // safe string comparison
+                found = true;
+                break; // early termination
             }
         }
 
-        System.out.println("\nAfter Sorting (Ascending):");
-        printArray(capacities);
-    }
-
-    // Helper method to print array
-    public static void printArray(int[] arr) {
-        for (int val : arr) {
-            System.out.print(val + " ");
+        // Display result
+        if (found) {
+            System.out.println("Bogie ID found in the train.");
+        } else {
+            System.out.println("Bogie ID not found.");
         }
-        System.out.println();
+
+        sc.close();
     }
 }
